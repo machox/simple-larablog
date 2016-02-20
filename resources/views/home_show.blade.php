@@ -83,7 +83,7 @@
                 <p class="lead">
                     by {{$post->user->name}}
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on {{$post->updated_at}}</p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{$post->updated_at->format('F j, Y')}}</p>
                 <p>category @if (isset($post->category->name)) {{$post->category->name}} @endif</p>
                 <hr>
                 <p>{{$post->content}}</p>

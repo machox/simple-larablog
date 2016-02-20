@@ -79,7 +79,7 @@
                     {{ $title }}
                 </h1>
 
-                @if (isset($posts))
+                @if (count($posts) > 0)
                     @foreach ($posts as $post)
                         <h2>
                             <a href="{{ url("/home/show/$post->id") }}">{{$post->title}}</a>
@@ -87,14 +87,32 @@
                         <p class="lead">
                             by {{$post->user->name}}
                         </p>
-                        <p><span class="glyphicon glyphicon-time"></span> Posted on {{$post->updated_at}}</p>
+                        <p><span class="glyphicon glyphicon-time"></span> Posted on {{$post->updated_at->format('F j, Y') }}</p>
                         <p>category @if (isset($post->category->name)) {{$post->category->name}} @endif</p>
                         <hr>
                         <p>{{$post->content}}</p>
                         <hr>
                         <hr>
                     @endforeach
+                @else
+                    <h1 class="page-header">
+                        Data not found
+                    </h1>
                 @endif
+
+                 <!-- Pager -->
+                <ul class="pager">
+                    <li class="previous">
+                        @if($posts->hasMorePages()) 
+                            <a href="{{$posts->nextPageUrl()}}">&larr; Older</a>
+                        @endif
+                    </li>
+                    <li class="next">
+                        @if($posts->previousPageUrl()) 
+                            <a href="{{$posts->previousPageUrl()}}">Newer &rarr;</a>
+                        @endif
+                    </li>
+                </ul>
 
             </div>
 

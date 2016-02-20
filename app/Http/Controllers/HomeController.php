@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = \App\Post::where('status', 'published')->get();
+        $posts = \App\Post::where('status', 'published')->paginate(10);
         $posts->load('category');
         $posts->load('user');
         $categories = \App\Category::all();
@@ -33,15 +33,13 @@ class HomeController extends Controller
 
     public function category($id)
     {
-        $posts = \App\Post::where('status', 'published')->where('category_id', $id)->get();
+        $posts = \App\Post::where('status', 'published')->where('category_id', $id)->paginate(10);
         $posts->load('category');
         $posts->load('user');
         $categories = \App\Category::all();
         $title = \App\Category::find($id);
-        if(!$title) 
-            $t = "Data Not Found";
-        else
-            $t = "Category $title->name";
+        $t = ($title) ? $t = "Category $title->name" : "Category";
+            
         return view('home', ['title' => $t, 'posts' => $posts, 'categories' => $categories]);
     }
 
